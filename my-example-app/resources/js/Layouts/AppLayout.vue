@@ -225,7 +225,7 @@ const logout = () => {
                                     {{ $page.props.user.name }}
                                 </div>
                                 <div class="font-medium text-sm text-gray-500">
-                                    {{ $page.props.user.email }}
+                                    {{ $page.props.user.username }}
                                 </div>
                             </div>
                         </div>

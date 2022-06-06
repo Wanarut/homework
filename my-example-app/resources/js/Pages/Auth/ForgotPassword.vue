@@ -12,7 +12,7 @@ defineProps({
 });
 
 const form = useForm({
-    email: '',
+    username: '',
 });
 
 const submit = () => {
@@ -40,11 +40,11 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <JetLabel for="email" value="Email" />
+                <JetLabel for="username" value="Username" />
                 <JetInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
+                    id="username"
+                    v-model="form.username"
+                    type="text"
                     class="mt-1 block w-full"
                     required
                     autofocus
@@ -53,7 +53,7 @@ const submit = () => {
 
             <div class="flex items-center justify-end mt-4">
                 <JetButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Email Password Reset Link
+                    Username Password Reset Link
                 </JetButton>
             </div>
         </form>

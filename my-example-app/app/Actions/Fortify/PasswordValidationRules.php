@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use Laravel\Fortify\Rules\Password;
+use App\Rules\PasswordRules;
 
 trait PasswordValidationRules
 {
@@ -13,13 +14,9 @@ trait PasswordValidationRules
      */
     protected function passwordRules()
     {
-        // Password เป็นรหัสผ่านความยาวไม่ต่ำกว่า 6 ตัวอักษร ต้องไม่เป็นตัวอักษรหรือตัวเลขเรียงกัน
-        // Password should not contain sequential characters
+        // Password เป็นรหัสผ่านความยาวไม่ต่ำกว่า 6 ตัวอักษร
         $password = (new Password)->length(6);
 
-        // Password มีการเข้ารหัสแบบ encrypt ทางเดียว ไม่สามารถ decrypt เพื่อเอา  raw password ได้ ในการบันทึกลงฐานข้อมูล
-        // Hashing Password
-
-        return ['required', 'string', $password, 'confirmed'];
+        return ['required', 'string', $password, 'confirmed', new PasswordRules];
     }
 }
