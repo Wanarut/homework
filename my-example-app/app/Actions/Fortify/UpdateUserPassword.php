@@ -26,6 +26,7 @@ class UpdateUserPassword implements UpdatesUserPasswords
             /* Checking if the current password is the same as the password in the database. */
             if (! isset($input['current_password']) || ! Hash::check($input['current_password'], $user->password)) {
                 $validator->errors()->add('current_password', __('The provided password does not match your current password.'));
+                return;
             }
             /* Checking if the new password is the same as the last 5 passwords. */
             foreach ($user->last_passwords as $password) {
