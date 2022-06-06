@@ -84,6 +84,12 @@ const submit = () => {
                     Log in
                 </JetButton>
             </div>
+            <div class="flex items-center justify-center mt-4">
+                <JetLabel for="register" value="Don't have account?" />
+                <Link :href="route('register')" class="ml-4 text-sm text-gray-700 underline">
+                    Register
+                </Link>
+            </div>
         </form>
     </JetAuthenticationCard>
 </template>

@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'username',
         'password',
+        'last_passwords',
     ];
 
     /**
@@ -36,6 +37,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'last_passwords',
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
@@ -48,6 +50,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'last_passwords' => 'array',
     ];
 
     /**
