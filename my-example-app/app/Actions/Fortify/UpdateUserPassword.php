@@ -31,7 +31,7 @@ class UpdateUserPassword implements UpdatesUserPasswords
             /* Checking if the new password is the same as the last 5 passwords. */
             foreach ($user->last_passwords as $password) {
                 if (Hash::check($input['password'], $password)) {
-                    $validator->errors()->add('password', __('The provided password matches your last 5 passwords.'));
+                    $validator->errors()->add('password', __('The provided password matches your last '.count($user->last_passwords).' password(s).'));
                 }
             }
         })->validateWithBag('updatePassword');

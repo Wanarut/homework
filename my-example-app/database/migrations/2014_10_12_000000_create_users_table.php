@@ -17,7 +17,8 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('firstname');
+            $table->string('lastname');
             $table->string('username')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -27,15 +28,6 @@ return new class extends Migration
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
-
-        User::create([
-            'name' => 'Administrator',
-            'username' => Str::random(13),
-            'email_verified_at' => now(),
-            'password' => Hash::make('password1'),
-            'last_passwords' => [Hash::make('password1'),Hash::make('password2'),Hash::make('password3'),Hash::make('password4'),Hash::make('password5')],
-            'remember_token' => Str::random(10),
-        ]);
     }
 
     /**

@@ -9,7 +9,8 @@ import JetLabel from '@/Jetstream/Label.vue';
 import JetValidationErrors from '@/Jetstream/ValidationErrors.vue';
 
 const form = useForm({
-    name: '',
+    firstname: '',
+    lastname: '',
     username: '',
     password: '',
     password_confirmation: '',
@@ -35,15 +36,28 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <JetLabel for="name" value="Name" />
+                <JetLabel for="firstname" value="Firstname" />
                 <JetInput
-                    id="name"
-                    v-model="form.name"
+                    id="firstname"
+                    v-model="form.firstname"
                     type="text"
                     class="mt-1 block w-full"
                     required
                     autofocus
-                    autocomplete="name"
+                    autocomplete="firstname"
+                />
+            </div>
+
+            <div class="mt-4">
+                <JetLabel for="lastname" value="Lastname" />
+                <JetInput
+                    id="lastname"
+                    v-model="form.lastname"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autofocus
+                    autocomplete="lastname"
                 />
             </div>
 
