@@ -27,16 +27,23 @@ class CreateNewUser implements CreatesNewUsers
             'username' => ['required', 'string', 'max:12', 'regex:/^[A-Za-z0-9_]+$/', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
+            'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validate();
 
         // Password มีการเข้ารหัสแบบ encrypt ทางเดียว ไม่สามารถ decrypt เพื่อเอา  raw password ได้ ในการบันทึกลงฐานข้อมูล
         // Hashing Password
-        return User::create([
+        $user = User::create([
             'firstname' => $input['firstname'],
             'lastname' => $input['lastname'],
             'username' => $input['username'],
             'password' => Hash::make($input['password']),
             'last_passwords' => [Hash::make($input['password'])],
         ]);
+        
+        if (isset($input['photo'])) {
+            $user->updateProfilePhoto($input['photo']);
+        }
+
+        return $user;
     }
 }

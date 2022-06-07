@@ -8,6 +8,11 @@ import JetCheckbox from '@/Jetstream/Checkbox.vue';
 import JetLabel from '@/Jetstream/Label.vue';
 import JetValidationErrors from '@/Jetstream/ValidationErrors.vue';
 
+import { ref } from 'vue';
+import { Inertia } from '@inertiajs/inertia';
+import JetInputError from '@/Jetstream/InputError.vue';
+import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue';
+
 const form = useForm({
     firstname: '',
     lastname: '',
@@ -15,7 +20,29 @@ const form = useForm({
     password: '',
     password_confirmation: '',
     terms: false,
+    photo: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png',
 });
+
+const photoPreview = ref(null);
+const photoInput = ref(null);
+
+const selectNewPhoto = () => {
+    photoInput.value.click();
+};
+
+const updatePhotoPreview = () => {
+    form.photo = photoInput.value.files[0];
+
+    if (! form.photo) return;
+
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+        photoPreview.value = e.target.result;
+    };
+
+    reader.readAsDataURL(form.photo);
+};
 
 const submit = () => {
     form.post(route('register'), {
@@ -36,6 +63,39 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
+                <input
+                    id="photo"
+                    name="photo"
+                    ref="photoInput"
+                    type="file"
+                    class="hidden"
+                    @change="updatePhotoPreview"
+                >
+
+                <JetLabel for="photo" value="Photo" />
+
+                <!-- Current Profile Photo -->
+                <div v-show="! photoPreview" class="mt-2">
+                    <img :src="form.photo" :alt="form.firstname" class="rounded-full h-20 w-20 object-cover" style="margin: 0 auto;">
+                </div>
+
+                <!-- New Profile Photo Preview -->
+                <div v-show="photoPreview" class="mt-2">
+                    <span
+                        class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
+                        :style="'background-image: url(\'' + photoPreview + '\'); margin: 0 auto;'"
+                    />
+                </div>
+
+                <div class="row text-center">
+                    <JetSecondaryButton class="mt-2" type="button" @click.prevent="selectNewPhoto">
+                        Select A New Photo
+                    </JetSecondaryButton>
+                </div>
+                <JetInputError :message="form.errors.photo" class="mt-2" />
+            </div>
+
+            <div class="mt-4">
                 <JetLabel for="firstname" value="Firstname" />
                 <JetInput
                     id="firstname"
